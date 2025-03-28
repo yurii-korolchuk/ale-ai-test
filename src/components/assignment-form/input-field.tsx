@@ -3,17 +3,19 @@ import { Label } from "@radix-ui/react-label";
 import cx from "classnames";
 
 interface InputFieldProps {
+  children: React.ReactNode;
   label: string;
   htmlFor?: string;
-  children: React.ReactNode;
   className?: string;
+  error?: string;
 }
 
 export const InputField = ({
+  children,
   label,
   htmlFor,
-  children,
   className,
+  error,
 }: InputFieldProps) => (
   <div
     className={cx(
@@ -24,6 +26,9 @@ export const InputField = ({
     <Label htmlFor={htmlFor} className="mb-1 sm:mb-0">
       {label}
     </Label>
-    {children}
+    <div className="w-full sm:w-[300px]">
+      {children}
+      {error ? <span className="mt-1 text-[#ef5350]">{error}</span> : null}
+    </div>
   </div>
 );
