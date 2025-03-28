@@ -15,8 +15,15 @@ export const InputField = ({
   children,
   className,
 }: InputFieldProps) => (
-  <div className={cx("w-full flex items-center justify-between", className)}>
-    <Label htmlFor={htmlFor}>{label}</Label>
+  <div
+    className={cx(
+      "w-full flex flex-col sm:flex-row items-start justify-between ",
+      className,
+    )}
+  >
+    <Label htmlFor={htmlFor} className="mb-1 sm:mb-0">
+      {label}
+    </Label>
     {children}
   </div>
 );

@@ -6,7 +6,7 @@ interface AppCardProps {
 }
 
 export const AppCard = ({ header, children }: AppCardProps) => (
-  <Card className="md:h-auto md:w-[720px] py-0 border-none gap-0">
+  <Card className="md:h-auto w-full md:w-[720px] py-0 border-none gap-0">
     <CardHeader className="flex items-center justify-center p-4">
       <CardTitle className="text-center text-xl">{header}</CardTitle>
     </CardHeader>
