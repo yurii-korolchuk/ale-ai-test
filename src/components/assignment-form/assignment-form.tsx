@@ -1,23 +1,14 @@
 "use client";
 
-import {
-  Button,
-  Input,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Textarea,
-} from "@/components/ui";
-import { InputField } from "./input-field";
+import { Button, Input, Textarea } from "@/components/ui";
+import { FormField } from "./form-field";
 
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { AssignmentFormValues, CandidateLevel } from "@/data";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { LevelSelect } from "./level-select";
 
 const schema = yup
   .object({
@@ -57,24 +48,24 @@ export const AssignmentForm = () => {
       className="flex flex-col space-y-5 sm:space-y-8 w-full p-6"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <InputField label="Name*" htmlFor="name" error={errors.name?.message}>
+      <FormField label="Name*" htmlFor="name" error={errors.name?.message}>
         <Input
           {...register("name")}
           aria-invalid={Boolean(errors.name)}
           id="name"
           type="text"
         />
-      </InputField>
+      </FormField>
 
-      <InputField label="Email*" htmlFor="email" error={errors.email?.message}>
+      <FormField label="Email*" htmlFor="email" error={errors.email?.message}>
         <Input
           {...register("email")}
           aria-invalid={Boolean(errors.email)}
           id="email"
         />
-      </InputField>
+      </FormField>
 
-      <InputField
+      <FormField
         label="Assignment Description*"
         htmlFor="assignment_description"
         error={errors.assignment_description?.message}
@@ -85,9 +76,9 @@ export const AssignmentForm = () => {
           className="max-h-[200px]"
           id="assignment_description"
         />
-      </InputField>
+      </FormField>
 
-      <InputField
+      <FormField
         label="Github Repository URL*"
         htmlFor="github_repo_url"
         error={errors.github_repo_url?.message}
@@ -97,9 +88,9 @@ export const AssignmentForm = () => {
           aria-invalid={Boolean(errors.github_repo_url)}
           id="github_repo_url"
         />
-      </InputField>
+      </FormField>
 
-      <InputField
+      <FormField
         label="Candidate Level*"
         error={errors.candidate_level?.message}
       >
@@ -107,32 +98,18 @@ export const AssignmentForm = () => {
           {...register("candidate_level")}
           control={control}
           render={({ field }) => (
-            <Select
+            <LevelSelect
               {...field}
+              levels={["Junior", "Middle", "Principal", "Senior"]}
+              error={Boolean(errors.candidate_level)}
               onValueChange={(e) => {
                 field.onChange(e);
                 clearErrors("candidate_level");
               }}
-            >
-              <SelectTrigger
-                className="w-full"
-                aria-invalid={Boolean(errors.candidate_level)}
-              >
-                <SelectValue placeholder="Select a level" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            />
           )}
         ></Controller>
-      </InputField>
+      </FormField>
 
       <Button className="self-center w-full sm:w-[300px]">
         Submit Assignment

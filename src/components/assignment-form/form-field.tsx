@@ -2,7 +2,7 @@ import { Label } from "@radix-ui/react-label";
 
 import cx from "classnames";
 
-interface InputFieldProps {
+interface FormFieldProps {
   children: React.ReactNode;
   label: string;
   htmlFor?: string;
@@ -10,13 +10,13 @@ interface InputFieldProps {
   error?: string;
 }
 
-export const InputField = ({
+export const FormField = ({
   children,
   label,
   htmlFor,
   className,
   error,
-}: InputFieldProps) => (
+}: FormFieldProps) => (
   <div
     className={cx(
       "w-full flex flex-col sm:flex-row items-start justify-between ",
