@@ -14,7 +14,31 @@ import {
 import { InputField } from "./input-field";
 
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { AssignmentFormValues } from "@/data";
+import { AssignmentFormValues, CandidateLevel } from "@/data";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    name: yup.string().required("Please provide full name."),
+    email: yup
+      .string()
+      .email("Please provide a valid email address.")
+      .required("Please provide an email address."),
+    assignment_description: yup
+      .string()
+      .required("Please provide an assignment description.")
+      .min(10, "Description must be at least 10 characters long."),
+    github_repo_url: yup
+      .string()
+      .url("Please provide a valid URL.")
+      .required("Please provide a github repository URL."),
+    candidate_level: yup
+      .mixed<CandidateLevel>()
+      .required("Please select level."),
+  })
+  .required();
 
 export const AssignmentForm = () => {
   const {
@@ -23,7 +47,7 @@ export const AssignmentForm = () => {
     handleSubmit,
     formState: { errors },
     clearErrors,
-  } = useForm<AssignmentFormValues>();
+  } = useForm<AssignmentFormValues>({ resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<AssignmentFormValues> = (data) =>
     console.log(data);
@@ -33,30 +57,19 @@ export const AssignmentForm = () => {
       className="flex flex-col space-y-5 sm:space-y-8 w-full p-6"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <InputField
-        label="Name*"
-        htmlFor="name"
-        error={errors.name && "Please provide full name."}
-      >
+      <InputField label="Name*" htmlFor="name" error={errors.name?.message}>
         <Input
-          {...register("name", { required: true })}
-          aria-invalid={errors.name ? "true" : "false"}
+          {...register("name")}
+          aria-invalid={Boolean(errors.name)}
           id="name"
           type="text"
         />
       </InputField>
 
-      <InputField
-        label="Email*"
-        htmlFor="email"
-        error={errors.email && "Please provide a valid email address."}
-      >
+      <InputField label="Email*" htmlFor="email" error={errors.email?.message}>
         <Input
-          {...register("email", {
-            required: true,
-            pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-          })}
-          aria-invalid={errors.email ? "true" : "false"}
+          {...register("email")}
+          aria-invalid={Boolean(errors.email)}
           id="email"
         />
       </InputField>
@@ -64,17 +77,11 @@ export const AssignmentForm = () => {
       <InputField
         label="Assignment Description*"
         htmlFor="assignment_description"
-        error={
-          errors.assignment_description &&
-          "Please provide a valid assignment description with a minimum length of 10 characters."
-        }
+        error={errors.assignment_description?.message}
       >
         <Textarea
-          {...register("assignment_description", {
-            required: true,
-            minLength: 10,
-          })}
-          aria-invalid={errors.assignment_description ? "true" : "false"}
+          {...register("assignment_description")}
+          aria-invalid={Boolean(errors.assignment_description)}
           className="max-h-[200px]"
           id="assignment_description"
         />
@@ -83,25 +90,21 @@ export const AssignmentForm = () => {
       <InputField
         label="Github Repository URL*"
         htmlFor="github_repo_url"
-        error={errors.github_repo_url && "Please provide a valid URL."}
+        error={errors.github_repo_url?.message}
       >
         <Input
-          {...register("github_repo_url", {
-            required: true,
-            pattern:
-              /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi,
-          })}
-          aria-invalid={errors.github_repo_url ? "true" : "false"}
+          {...register("github_repo_url")}
+          aria-invalid={Boolean(errors.github_repo_url)}
           id="github_repo_url"
         />
       </InputField>
 
       <InputField
         label="Candidate Level*"
-        error={errors.candidate_level && "Please select level."}
+        error={errors.candidate_level?.message}
       >
         <Controller
-          {...register("candidate_level", { required: true })}
+          {...register("candidate_level")}
           control={control}
           render={({ field }) => (
             <Select
@@ -113,7 +116,7 @@ export const AssignmentForm = () => {
             >
               <SelectTrigger
                 className="w-full"
-                aria-invalid={errors.candidate_level ? "true" : "false"}
+                aria-invalid={Boolean(errors.candidate_level)}
               >
                 <SelectValue placeholder="Select a level" />
               </SelectTrigger>
