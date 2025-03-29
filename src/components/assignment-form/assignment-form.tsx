@@ -10,6 +10,9 @@ import { AssignmentFormValues, CandidateLevel, submitAssignment } from "@/data";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+import * as qs from "qs";
 
 const schema = yup
   .object({
@@ -37,6 +40,8 @@ interface AssignmentFormProps {
 }
 
 export const AssignmentForm = ({ candidateLevels }: AssignmentFormProps) => {
+  const router = useRouter();
+
   const {
     control,
     register,
@@ -50,13 +55,18 @@ export const AssignmentForm = ({ candidateLevels }: AssignmentFormProps) => {
   const onSubmit: SubmitHandler<AssignmentFormValues> = async (data) => {
     const result = await submitAssignment(data);
 
-    if (result.success) {
-      reset();
-    } else {
+    if (!result.success) {
       toast.error("Something went wrong while submitting your assignment.", {
         description: result.errors?.join(" "),
       });
+
+      return;
     }
+
+    const params = qs.stringify(data);
+    router.push(`/thank-you?${params}`);
+
+    reset();
   };
 
   return (
