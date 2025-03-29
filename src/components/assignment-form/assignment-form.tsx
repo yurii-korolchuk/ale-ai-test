@@ -2,13 +2,13 @@
 
 import { Button, Input, Textarea } from "@/components/ui";
 import { FormField } from "./form-field";
+import { CandidateLevelSelect } from "./candidate-level-select";
 
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { AssignmentFormValues, CandidateLevel } from "@/data";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { LevelSelect } from "./level-select";
 
 const schema = yup
   .object({
@@ -41,11 +41,15 @@ export const AssignmentForm = ({ candidateLevels }: AssignmentFormProps) => {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors,
-  } = useForm<AssignmentFormValues>({ resolver: yupResolver(schema) });
+    reset,
+  } = useForm<AssignmentFormValues>({
+    resolver: yupResolver(schema),
+  });
 
-  const onSubmit: SubmitHandler<AssignmentFormValues> = (data) =>
+  const onSubmit: SubmitHandler<AssignmentFormValues> = (data) => {
     console.log(data);
+    reset();
+  };
 
   return (
     <form
@@ -102,14 +106,11 @@ export const AssignmentForm = ({ candidateLevels }: AssignmentFormProps) => {
           {...register("candidate_level")}
           control={control}
           render={({ field }) => (
-            <LevelSelect
+            <CandidateLevelSelect
               {...field}
               levels={candidateLevels}
               error={Boolean(errors.candidate_level)}
-              onValueChange={(e) => {
-                field.onChange(e);
-                clearErrors("candidate_level");
-              }}
+              onValueChange={field.onChange}
             />
           )}
         ></Controller>
