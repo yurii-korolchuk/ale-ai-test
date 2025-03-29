@@ -1,4 +1,4 @@
-export type CandidateLevel = "Junior" | "Middle" | "Senior" | "Principal";
+export type CandidateLevel = 'Junior' | 'Middle' | 'Senior' | 'Principal';
 
 export interface AssignmentFormValues {
   name: string;

@@ -1,6 +1,5 @@
-import { Label } from "@radix-ui/react-label";
-
-import cx from "classnames";
+import { Label } from '@radix-ui/react-label';
+import cx from 'classnames';
 
 interface FormFieldProps {
   children: React.ReactNode;
@@ -19,16 +18,16 @@ export const FormField = ({
 }: FormFieldProps) => (
   <div
     className={cx(
-      "w-full flex flex-col sm:flex-row items-start justify-between ",
-      className,
+      'flex w-full flex-col items-start justify-between sm:flex-row',
+      className
     )}
   >
-    <Label htmlFor={htmlFor} className="mb-1 sm:mb-0">
+    <Label htmlFor={htmlFor} className='mb-1 sm:mb-0'>
       {label}
     </Label>
-    <div className="w-full sm:w-[300px]">
+    <div className='w-full sm:w-[300px]'>
       {children}
-      {error ? <span className="mt-1 text-[#ef5350]">{error}</span> : null}
+      {error ? <span className='mt-1 text-[#ef5350]'>{error}</span> : null}
     </div>
   </div>
 );

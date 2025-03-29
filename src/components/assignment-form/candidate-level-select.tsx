@@ -1,14 +1,15 @@
-import { SelectProps } from "@radix-ui/react-select";
-import { FC, useEffect, useState } from "react";
+import { CandidateLevel } from '@/data';
+import { SelectProps } from '@radix-ui/react-select';
+import { FC, useEffect, useState } from 'react';
+
 import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectGroup,
-  SelectValue,
   SelectItem,
-} from "../ui";
-import { CandidateLevel } from "@/data";
+  SelectTrigger,
+  SelectValue,
+} from '../ui';
 
 interface CandidateLevelSelectProps
   extends React.ComponentProps<FC<SelectProps>> {
@@ -32,15 +33,15 @@ export const CandidateLevelSelect = ({
 
   return (
     <Select
-      value={internalValue || ""}
+      value={internalValue || ''}
       onValueChange={(val) => {
         setInternalValue(val);
         onValueChange?.(val);
       }}
       {...props}
     >
-      <SelectTrigger className="w-full" aria-invalid={error}>
-        <SelectValue placeholder="Select a level" />
+      <SelectTrigger className='w-full' aria-invalid={error}>
+        <SelectValue placeholder='Select a level' />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

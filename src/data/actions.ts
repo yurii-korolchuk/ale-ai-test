@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { AssignmentFormValues } from "./types";
+import { AssignmentFormValues } from './types';
 
 interface SubmitAssignmentResponse {
-  status: "success" | "error";
+  status: 'success' | 'error';
   message: string;
   errors: string[];
 }
@@ -14,21 +14,21 @@ interface SubmitAssignmentReturnValue {
 }
 
 export const submitAssignment = async (
-  data: AssignmentFormValues,
+  data: AssignmentFormValues
 ): Promise<SubmitAssignmentReturnValue> => {
   try {
     const response = await fetch(
-      "https://tools.qa.ale.ai/api/tools/candidates/assignments",
+      'https://tools.qa.ale.ai/api/tools/candidates/assignments',
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
-      },
+      }
     );
 
     const responseData: SubmitAssignmentResponse = await response.json();
 
-    if (responseData.status === "success") {
+    if (responseData.status === 'success') {
       return { success: true };
     } else {
       return { success: false, errors: responseData.errors };
