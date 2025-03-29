@@ -1,5 +1,5 @@
 import { AppCard } from '@/components/app-card';
-import { Button } from '@/components/ui';
+import { Button, Separator } from '@/components/ui';
 import { AssignmentFormValues, transformAssignmentFormLabels } from '@/data';
 import Link from 'next/link';
 
@@ -24,8 +24,9 @@ export default async function ThankYouPage({
             <span className='sm:max-w-[300px]'>{value}</span>
           </div>
         ))}
-        <Link href='/' className='self-center'>
-          <Button>Go back</Button>
+        <Separator />
+        <Link href='/' className='w-full self-center sm:w-[300px]'  >
+          <Button className='w-full'>Go back</Button>
         </Link>
       </div>
     </AppCard>
