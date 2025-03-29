@@ -31,7 +31,11 @@ const schema = yup
   })
   .required();
 
-export const AssignmentForm = () => {
+interface AssignmentFormProps {
+  candidateLevels: CandidateLevel[];
+}
+
+export const AssignmentForm = ({ candidateLevels }: AssignmentFormProps) => {
   const {
     control,
     register,
@@ -100,7 +104,7 @@ export const AssignmentForm = () => {
           render={({ field }) => (
             <LevelSelect
               {...field}
-              levels={["Junior", "Middle", "Principal", "Senior"]}
+              levels={candidateLevels}
               error={Boolean(errors.candidate_level)}
               onValueChange={(e) => {
                 field.onChange(e);

@@ -1,5 +1,5 @@
 import { AppCard } from "@/components/app-card";
-import { AssignmentFormValues, transformFormLabels } from "@/data";
+import { AssignmentFormValues, transformAssignmentFormLabels } from "@/data";
 
 // TODO: REMOVE
 const EXAMPLE: AssignmentFormValues = {
@@ -22,7 +22,7 @@ export default function ThankYouPage() {
             className="flex flex-col sm:flex-row items-start justify-between"
           >
             <span className="font-bold mb-2 sm:mb-0">
-              {transformFormLabels(key as keyof AssignmentFormValues)}
+              {transformAssignmentFormLabels(key as keyof AssignmentFormValues)}
             </span>
             <span className="sm:max-w-[300px]">{value}</span>
           </div>

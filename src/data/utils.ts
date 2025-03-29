@@ -1,6 +1,6 @@
 import { AssignmentFormValues } from "./types";
 
-export const transformFormLabels = (
+export const transformAssignmentFormLabels = (
   key: keyof AssignmentFormValues,
 ): string => {
   const transformedValues: { [key in keyof AssignmentFormValues]: string } = {
