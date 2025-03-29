@@ -7,3 +7,8 @@ export interface AssignmentFormValues {
   github_repo_url: string;
   candidate_level: CandidateLevel;
 }
+
+export interface TransformedResponse {
+  success: boolean;
+  errors?: string[];
+}
